@@ -11,7 +11,7 @@ setup(
     author="sukhbinder",
     author_email="sukh2010@yahoo.com",
     entry_points={
-        'gui_scripts': ['startrecord = screenrecord.srecord:main']
+        'console_scripts': ['startrecord = screenrecord.srecord:main']
     },
-	install_requires=["imageio", "imageio-ffmeg"]
+	install_requires=["imageio", "imageio-ffmpeg"]
 )
