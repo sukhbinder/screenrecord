@@ -17,7 +17,7 @@ def create_parser():
     parser.add_argument("-d", "--delay", type=float, default=0.5,
                         help='Delay between frames in seconds, default 0.5 s')
     parser.add_argument("-dur", "--duration", type=int,
-                        default=20, help='Duration of capture')
+                        default=20, help='Duration of capture, default 20 s')
     parser.add_argument("--bbox", type=int, nargs="+",
                         default=[0, 0, 800, 400], help='Bounding box, default (0, 0, 800, 400)')
     parser.add_argument("-f", "--fullscreen", action='store_true')
