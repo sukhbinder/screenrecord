@@ -6,7 +6,7 @@ C:\Users\singhs>record usage.gif --bbox 10 10 1000 450 -d 0.1
 ```
 
 # Usage
-![usage screenshot for screenrecod with python](img/usage.gif)
+![usage screenshot for screenrecod with python](https://raw.githubusercontent.com/sukhbinder/screenrecord/master/img/usage.gif)
 
 
 ## Command line arguments
