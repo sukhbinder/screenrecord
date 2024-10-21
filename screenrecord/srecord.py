@@ -11,7 +11,10 @@ import numpy as np
 import ctypes
 from threading import Timer
 
-user32 = ctypes.windll.user32
+try:
+    user32 = ctypes.windll.user32
+except AttributeError:
+    pass
 
 def get_active_window_info():
     hwnd = user32.GetForegroundWindow()
