@@ -24,7 +24,34 @@ You can also use:
 python -m record --help
 ```
 
-![demo usage of screenrecord](usage.gif)
+Shows 
+
+```bash
+usage: record [-h] [-i INITDELAY] [-d DELAY] [-dur DURATION]
+              [--bbox BBOX [BBOX ...]] [-f] [-aw]
+              filename
+
+Screen Recording with python
+
+positional arguments:
+  filename              filename can be mp4 or gif or mov
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INITDELAY, --initdelay INITDELAY
+                        Initial delay in seconds, default 5 s
+  -d DELAY, --delay DELAY
+                        Delay between frames in seconds, default 0.5 s
+  -dur DURATION, --duration DURATION
+                        Duration of capture, default 20 s
+  --bbox BBOX [BBOX ...]
+                        Bounding box, default (0, 0, 50, 50)
+  -f, --fullscreen
+  -aw, --activewindow
+
+```
+
+![demo usage of screenrecord](https://raw.githubusercontent.com/sukhbinder/screenrecord/main/usage.gif)
 
 ## Development
 
