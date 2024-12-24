@@ -88,7 +88,10 @@ if sys.platform == "darwin":
 
 def get_win_size():
 
-    screen_width, screen_height = screensize()
+    if sys.platform == "darwin":
+        screen_width, screen_height = screensize()
+    else:
+        screen_width, screen_height = ImageGrab.grab().size
 
     window = get_active_window_info()
     # Get window geometry
