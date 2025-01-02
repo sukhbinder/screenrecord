@@ -52,7 +52,6 @@ if sys.platform == "win32":
         width = int((client_rect.right - client_rect.left) / scaling_factor)
         height = int((client_rect.bottom - client_rect.top) / scaling_factor)
 
-        print(f"Window dimensions (scaled): x={x}, y={y}, width={width}, height={height}")
         return x, y, width, height
 
     def screensize():
@@ -66,6 +65,7 @@ if sys.platform == "win32":
         height = int(user32.GetSystemMetrics(1) / scaling_factor)
 
         return width, height
+
 
 if sys.platform == "darwin":
     from Quartz import (
