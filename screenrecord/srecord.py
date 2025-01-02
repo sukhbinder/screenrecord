@@ -9,8 +9,22 @@ import sys
 
 if sys.platform == "win32":
     import ctypes
+    from ctypes import wintypes
 
     user32 = ctypes.windll.user32
+    shcore = ctypes.windll.shcore
+
+    # Define necessary constants and functions
+    PROCESS_PER_MONITOR_DPI_AWARE = 2
+    shcore.SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE)
+
+    def get_dpi_for_window(hwnd):
+        """Get the DPI scaling factor for the given window."""
+        try:
+            return shcore.GetDpiForWindow(hwnd)
+        except Exception:
+            # Fallback to 96 DPI (100% scaling) if GetDpiForWindow fails
+            return 96
 
     def get_active_window_info():
         hwnd = user32.GetForegroundWindow()
@@ -18,27 +32,40 @@ if sys.platform == "win32":
         if not hwnd:
             return None
 
-        rect = ctypes.create_string_buffer(16)
-        user32.GetWindowRect(hwnd, rect)
+        # Get the DPI scaling factor for the window
+        dpi = get_dpi_for_window(hwnd)
+        scaling_factor = dpi / 96.0  # 96 DPI is 100% scaling
 
-        x = int.from_bytes(rect[:4], byteorder="little")
-        y = int.from_bytes(rect[4:8], byteorder="little")
-        width = int.from_bytes(rect[8:12], byteorder="little")
-        height = int.from_bytes(rect[12:], byteorder="little")
+        # Get the client area dimensions
+        client_rect = wintypes.RECT()
+        user32.GetClientRect(hwnd, ctypes.byref(client_rect))
 
+        # Convert client coordinates to screen coordinates
+        client_point = wintypes.POINT()
+        client_point.x = client_rect.left
+        client_point.y = client_rect.top
+        user32.ClientToScreen(hwnd, ctypes.byref(client_point))
+
+        # Get the window dimensions and adjust for DPI scaling
+        x = int(client_point.x / scaling_factor)
+        y = int(client_point.y / scaling_factor)
+        width = int((client_rect.right - client_rect.left) / scaling_factor)
+        height = int((client_rect.bottom - client_rect.top) / scaling_factor)
+
+        print(f"Window dimensions (scaled): x={x}, y={y}, width={width}, height={height}")
         return x, y, width, height
 
     def screensize():
-        """Returns the width and height of the screen as a two-integer tuple.
+        """Returns the width and height of the screen as a two-integer tuple."""
+        # Get the screen dimensions and adjust for DPI scaling
+        hwnd = user32.GetDesktopWindow()
+        dpi = get_dpi_for_window(hwnd)
+        scaling_factor = dpi / 96.0
 
-        Returns:
-        (width, height) tuple of the screen size, in pixels.
-        """
-        return (
-            ctypes.windll.user32.GetSystemMetrics(0),
-            ctypes.windll.user32.GetSystemMetrics(1),
-        )
+        width = int(user32.GetSystemMetrics(0) / scaling_factor)
+        height = int(user32.GetSystemMetrics(1) / scaling_factor)
 
+        return width, height
 
 if sys.platform == "darwin":
     from Quartz import (
