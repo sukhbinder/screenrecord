@@ -7,6 +7,8 @@
 
 Record screen with python
 
+The backstory for this tool is [here](https://sukhbinder.wordpress.com/?s=screenrecord)
+
 ## Installation
 
 Install this tool using `pip`:
