@@ -12,8 +12,11 @@ def test_default_args():
     args = parser.parse_args(["test.gif"])
     assert args.filename == "test.gif"
     assert args.initdelay == 5
-    assert args.delay == 0.5
+    assert args.delay == 0.1
     assert args.duration == 20
+    assert args.bbox == [0, 0, 50, 50]
+    assert args.fullscreen is False
+    assert args.activewindow is False
 
 
 def test_bool_args():
