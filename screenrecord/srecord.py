@@ -163,15 +163,15 @@ def create_parser():
         "-d",
         "--delay",
         type=float,
-        default=0.5,
-        help="Delay between frames in seconds, default 0.5 s",
+        default=0.1,
+        help="Delay between frames in seconds, default 0.1 s",
     )
     parser.add_argument(
         "-dur",
         "--duration",
         type=int,
         default=20,
-        help="Duration of capture, default 20 s",
+        help="Duration of capture, default 20s",
     )
     parser.add_argument(
         "--bbox",
@@ -198,16 +198,13 @@ def record(outfilename, initdelay=5, delay=0.1, duration=5, area=None):
         right = int(screen_width * ((left_percent + width_percent) / 100))
         bottom = int(screen_height * ((top_percent + height_percent) / 100))
         area_pix = (left, top, right, bottom)
-        # print(area_pix)
 
     img = []
     time.sleep(initdelay)
     print("Started..\a")
-    # sc = imageio.get_reader("<screen>")
     t0 = time.time()
     while True:
         t1 = time.time()
-        # still = sc.get_next_data()
         still = ImageGrab.grab()
         if area:
             still = still.crop(area_pix)
