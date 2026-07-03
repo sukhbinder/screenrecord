@@ -114,7 +114,6 @@ if sys.platform == "darwin":
 
 
 def get_win_size():
-
     if sys.platform == "darwin":
         screen_width, screen_height = screensize()
     else:
@@ -193,14 +192,34 @@ def create_parser():
         default=[0, 0, 50, 50],
         help="Bounding box, default (0, 0, 50, 50)",
     )
-    parser.add_argument("-f", "--fullscreen", action="store_true")
-    parser.add_argument("-aw", "--activewindow", action="store_true")
-    parser.add_argument("-s", "--save", action="store_true")
+    parser.add_argument(
+        "-f", "--fullscreen", action="store_true", help="Record fullscreen"
+    )
+    parser.add_argument(
+        "-aw",
+        "--activewindow",
+        action="store_true",
+        help="Allows user to select an active window to record.",
+    )
+    parser.add_argument(
+        "-s",
+        "--save",
+        action="store_true",
+        help="Save frames used for creating the gif/mp4",
+    )
     return parser
 
 
-def record(outfilename, initdelay=5, delay=0.1, duration=5, area=None, save=False, fps=10, loop=5):
-
+def record(
+    outfilename,
+    initdelay=5,
+    delay=0.1,
+    duration=5,
+    area=None,
+    save=False,
+    fps=10,
+    loop=5,
+):
     area_pix = area
     if area:
         screen_width, screen_height = ImageGrab.grab().size
@@ -232,6 +251,7 @@ def record(outfilename, initdelay=5, delay=0.1, duration=5, area=None, save=Fals
     if save:
         import tempfile
         import os
+
         temp_dir = tempfile.mkdtemp()
         print(f"Saving frames to temporaru folder: {temp_dir}")
         # Save all frames to temp directory
@@ -239,7 +259,6 @@ def record(outfilename, initdelay=5, delay=0.1, duration=5, area=None, save=Fals
             frame_filename = os.path.join(temp_dir, f"frame_{i}.png")
             frame.save(frame_filename)
         print(f"All frames saved to: {temp_dir}")
-
 
 
 def main_active(args):
@@ -252,7 +271,7 @@ def main_active(args):
         area=active_window_info,
         save=args.save,
         fps=args.fps,
-        loop=args.loop
+        loop=args.loop,
     )
 
 

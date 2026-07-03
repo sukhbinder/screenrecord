@@ -29,8 +29,8 @@ python -m record --help
 Shows 
 
 ```bash
-usage: record [-h] [-i INITDELAY] [-d DELAY] [-dur DURATION]
-              [--bbox BBOX [BBOX ...]] [-f] [-aw]
+usage: record [-h] [-i INITDELAY] [-l LOOP] [--fps FPS] [-d DELAY]
+              [-dur DURATION] [--bbox BBOX [BBOX ...]] [-f] [-aw] [-s]
               filename
 
 Screen Recording with python
@@ -42,15 +42,17 @@ optional arguments:
   -h, --help            show this help message and exit
   -i INITDELAY, --initdelay INITDELAY
                         Initial delay in seconds, default 5 s
+  -l LOOP, --loop LOOP  No of loops for GIF, default 5 (0 = infinite loop)
+  --fps FPS             FPS, default is 10
   -d DELAY, --delay DELAY
-                        Delay between frames in seconds, default 0.5 s
+                        Delay between frames in seconds, default 0.1 s
   -dur DURATION, --duration DURATION
-                        Duration of capture, default 20 s
+                        Duration of capture, default 20s
   --bbox BBOX [BBOX ...]
                         Bounding box, default (0, 0, 50, 50)
-  -f, --fullscreen
-  -aw, --activewindow
-
+  -f, --fullscreen      Record fullscreen
+  -aw, --activewindow   Allows user to select an active window to record.
+  -s, --save            Save frames used for creating the gif/mp4
 ```
 
 ![demo usage of screenrecord](https://raw.githubusercontent.com/sukhbinder/screenrecord/main/usage.gif)
