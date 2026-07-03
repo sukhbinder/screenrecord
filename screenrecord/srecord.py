@@ -160,6 +160,19 @@ def create_parser():
         help="Initial delay in seconds, default 5 s",
     )
     parser.add_argument(
+        "-l",
+        "--loop",
+        type=int,
+        default=5,
+        help="No of loops for GIF, default 5 (0 = infinite loop)",
+    )
+    parser.add_argument(
+        "--fps",
+        type=int,
+        default=10,
+        help="FPS, default is 10",
+    )
+    parser.add_argument(
         "-d",
         "--delay",
         type=float,
@@ -182,11 +195,11 @@ def create_parser():
     )
     parser.add_argument("-f", "--fullscreen", action="store_true")
     parser.add_argument("-aw", "--activewindow", action="store_true")
-
+    parser.add_argument("-s", "--save", action="store_true")
     return parser
 
 
-def record(outfilename, initdelay=5, delay=0.1, duration=5, area=None):
+def record(outfilename, initdelay=5, delay=0.1, duration=5, area=None, save=False, fps=10, loop=5):
 
     area_pix = area
     if area:
@@ -214,7 +227,19 @@ def record(outfilename, initdelay=5, delay=0.1, duration=5, area=None):
         if t2 - t0 > duration:
             break
     print("Ended..\a\a")
-    imageio.mimsave(outfilename, img, fps=2)
+    imageio.mimsave(outfilename, img, fps=fps, loop=loop)
+
+    if save:
+        import tempfile
+        import os
+        temp_dir = tempfile.mkdtemp()
+        print(f"Saving frames to temporaru folder: {temp_dir}")
+        # Save all frames to temp directory
+        for i, frame in enumerate(img):
+            frame_filename = os.path.join(temp_dir, f"frame_{i}.png")
+            frame.save(frame_filename)
+        print(f"All frames saved to: {temp_dir}")
+
 
 
 def main_active(args):
@@ -225,6 +250,9 @@ def main_active(args):
         duration=args.duration,
         delay=args.delay,
         area=active_window_info,
+        save=args.save,
+        fps=args.fps,
+        loop=args.loop
     )
 
 
