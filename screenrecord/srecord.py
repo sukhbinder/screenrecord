@@ -140,11 +140,30 @@ def get_window(args):
     t = Timer(5.0, wrapper)
     t.start()
 
+EXAMPLE = """
+ Examples:
+
+  # Record the active window (you select it with mouse) as a GIF
+  record demo.gif -aw
+
+  # Record fullscreen for 10 seconds at 15 FPS
+  record fullscreen.mp4 -f -dur 10 --fps 15
+
+  # Record a specific region as a GIF with infinite loop
+  record region.gif --bbox 0 0 50 50 -l 0
+
+  # Record active window, save individual frames to temp folder
+  record clip.gif -aw -s
+
+"""
+
 
 def create_parser():
     parser = argparse.ArgumentParser(
-        prog="record", description="Screen Recording with python"
-    )
+         prog="record", description="Screen Recording with python",
+         epilog=EXAMPLE,
+         formatter_class=argparse.RawDescriptionHelpFormatter,
+       )
     parser.add_argument(
         "filename",
         type=str,
