@@ -22,37 +22,23 @@ For help, run:
 record --help
 ```
 You can also use:
-```bash
-python -m record --help
-```
-
-Shows 
 
 ```bash
-usage: record [-h] [-i INITDELAY] [-l LOOP] [--fps FPS] [-d DELAY]
-              [-dur DURATION] [--bbox BBOX [BBOX ...]] [-f] [-aw] [-s]
-              filename
 
-Screen Recording with python
+Examples:
 
-positional arguments:
-  filename              filename can be mp4 or gif or mov
+  # Record the active window (you select it with mouse) as a GIF
+  record demo.gif -aw
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -i INITDELAY, --initdelay INITDELAY
-                        Initial delay in seconds, default 5 s
-  -l LOOP, --loop LOOP  No of loops for GIF, default 5 (0 = infinite loop)
-  --fps FPS             FPS, default is 10
-  -d DELAY, --delay DELAY
-                        Delay between frames in seconds, default 0.1 s
-  -dur DURATION, --duration DURATION
-                        Duration of capture, default 20s
-  --bbox BBOX [BBOX ...]
-                        Bounding box, default (0, 0, 50, 50)
-  -f, --fullscreen      Record fullscreen
-  -aw, --activewindow   Allows user to select an active window to record.
-  -s, --save            Save frames used for creating the gif/mp4
+  # Record fullscreen for 10 seconds at 15 FPS
+  record fullscreen.mp4 -f -dur 10 --fps 15
+
+  # Record a specific region as a GIF with infinite loop
+  record region.gif --bbox 0 0 50 50 -l 0
+
+  # Record active window, save individual frames to temp folder
+  record clip.gif -aw -s
+
 ```
 
 ![demo usage of screenrecord](https://raw.githubusercontent.com/sukhbinder/screenrecord/main/usage.gif)
@@ -69,7 +55,9 @@ Now install the dependencies and test dependencies:
 ```bash
 pip install -e '.[test]'
 ```
+
 To run the tests:
 ```bash
 python -m pytest
+
 ```
